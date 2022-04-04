@@ -1,0 +1,8 @@
+{
+    "bsc": {
+      "erc20CurrencyIsWhitelisted": [
+      ],
+      "nftContractIsWhitelisted": [
+      ]
+    }
+  }
