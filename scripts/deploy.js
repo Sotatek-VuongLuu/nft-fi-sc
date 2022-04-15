@@ -7,7 +7,7 @@ async function main() {
   const network = hre.network.name;
   const contracts = await getContracts(network)[network];
   const NFTaq = await ethers.getContractFactory("NFTaq");
-  const nftaq = await NFTaq.deploy(contracts.erc20CurrencyIsWhitelisted,contracts.nftContractIsWhitelisted);
+  const nftaq = await NFTaq.deploy(contracts.erc20CurrencyIsWhitelisted, contracts.nftContractIsWhitelisted);
 
   await nftaq.deployed();
   await saveContract(network, 'nftaq', nftaq.address);

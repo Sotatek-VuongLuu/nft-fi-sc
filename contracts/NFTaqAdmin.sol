@@ -125,4 +125,12 @@ contract NFTaqAdmin is Ownable, Pausable, ReentrancyGuard {
         adminFeeInBasisPoints = _newAdminFeeInBasisPoints;
         emit AdminFeeUpdated(_newAdminFeeInBasisPoints);
     }
+
+    function setPause() external onlyOwner {
+        _pause();
+    }
+
+    function setUnPause() external onlyOwner {
+        _unpause();
+    }
 }

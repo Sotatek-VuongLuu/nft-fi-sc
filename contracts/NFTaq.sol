@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "./NFTaqAdmin.sol";
@@ -55,6 +56,7 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
     // @notice OpenZeppelin's SafeMath library is used for all arithmetic
     //         operations to avoid overflows/underflows.
     using SafeMath for uint256;
+    using SafeERC20 for IERC20;
 
     /* ********** */
     /* DATA TYPES */
@@ -156,15 +158,15 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
     //         whether the borrower will simply pay maximumRepaymentAmount.
     event LoanStarted(
         uint256 loanId,
-        address borrower,
-        address lender,
+        address indexed borrower,
+        address indexed lender,
         uint256 loanPrincipalAmount,
         uint256 maximumRepaymentAmount,
         uint256 nftCollateralId,
         uint256 loanStartTime,
         uint256 loanDuration,
         uint256 loanInterestRateForDurationInBasisPoints,
-        address nftCollateralContract,
+        address indexed nftCollateralContract,
         address loanERC20Denomination,
         bool interestIsProRated
     );
@@ -197,13 +199,13 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
     //         used as principal/interest for this loan.
     event LoanRepaid(
         uint256 loanId,
-        address borrower,
-        address lender,
+        address indexed borrower,
+        address indexed lender,
         uint256 loanPrincipalAmount,
         uint256 nftCollateralId,
         uint256 amountPaidToLender,
         uint256 adminFee,
-        address nftCollateralContract,
+        address indexed nftCollateralContract,
         address loanERC20Denomination
     );
 
@@ -230,13 +232,13 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
     // @param  nftCollateralContract - The ERC721 contract of the NFT collateral
     event LoanLiquidated(
         uint256 loanId,
-        address borrower,
-        address lender,
+        address indexed borrower,
+        address indexed lender,
         uint256 loanPrincipalAmount,
         uint256 nftCollateralId,
         uint256 loanMaturityDate,
         uint256 loanLiquidationDate,
-        address nftCollateralContract
+        address indexed nftCollateralContract
     );
 
 
@@ -396,9 +398,9 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
         uint256 _loanPrincipalAmount,
         uint256 _maximumRepaymentAmount,
         uint256 _nftCollateralId,
-        uint256 _loanDuration,
-        uint256 _loanInterestRateForDurationInBasisPoints,
-        uint256 _adminFeeInBasisPoints,
+        uint32 _loanDuration,
+        uint32 _loanInterestRateForDurationInBasisPoints,
+        uint32 _adminFeeInBasisPoints,
         uint256[2] memory _borrowerAndLenderNonces,
         address _nftCollateralContract,
         address _loanERC20Denomination,
@@ -484,7 +486,7 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
         IERC721(loan.nftCollateralContract).transferFrom(msg.sender, address(this), loan.nftCollateralId);
 
         // Transfer principal from lender to borrower.
-        IERC20(loan.loanERC20Denomination).transferFrom(_lender, msg.sender, loan.loanPrincipalAmount);
+        IERC20(loan.loanERC20Denomination).safeTransferFrom(_lender, msg.sender, loan.loanPrincipalAmount);
 
         // Issue an ERC721 promissory note to the lender that gives them the
         // right to either the principal-plus-interest or the collateral.
@@ -535,6 +537,10 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
         // sake of saving gas.
         Loan memory loan = loanIdToLoan[_loanId];
 
+        // Ensure that the loan is not overdue
+        uint256 loanMaturityDate = (uint256(loan.loanStartTime)).add(uint256(loan.loanDuration));
+        require(block.timestamp <= loanMaturityDate, 'Loan is overdue');
+
         // Check that the borrower is the caller, only the borrower is entitled
         // to the collateral.
         require(msg.sender == loan.borrower, 'Only the borrower can pay back a loan and reclaim the underlying NFT');
@@ -564,10 +570,10 @@ contract NFTaq is NFTaqAdmin, NFTaqSigningUtils, ERC721 {
         totalActiveLoans = totalActiveLoans.sub(1);
 
         // Transfer principal-plus-interest-minus-fees from borrower to lender
-        IERC20(loan.loanERC20Denomination).transferFrom(loan.borrower, lender, payoffAmount);
+        IERC20(loan.loanERC20Denomination).safeTransferFrom(loan.borrower, lender, payoffAmount);
 
         // Transfer fees from borrower to admins
-        IERC20(loan.loanERC20Denomination).transferFrom(loan.borrower, owner(), adminFee);
+        IERC20(loan.loanERC20Denomination).safeTransferFrom(loan.borrower, owner(), adminFee);
 
         // Transfer collateral from this contract to borrower.
         require(_transferNftToAddress(
