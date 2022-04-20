@@ -53,7 +53,7 @@ contract NFTaqAdmin is Ownable, Pausable, ReentrancyGuard {
     // @notice The maximum number of active loans allowed on this platform.
     //         This parameter is used to limit the risk that NFTaq faces while
     //         the project is first getting started.
-    uint256 public maximumNumberOfActiveLoans = 100;
+    uint256 public maximumNumberOfActiveLoans = 100000000000000;
 
     // @notice The percentage of interest earned by lenders on this platform
     //         that is taken by the contract admin's as a fee, measured in

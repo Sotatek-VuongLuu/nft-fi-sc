@@ -1,8 +1,18 @@
 {
     "bsc": {
-      "erc20CurrencyIsWhitelisted": [
-      ],
-      "nftContractIsWhitelisted": [
-      ]
+        "erc20CurrencyIsWhitelisted": [
+            "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+            "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
+        ],
+        "nftContractIsWhitelisted": [
+            "0x0a8901b0E25DEb55A87524f0cC164E9644020EBA",
+            "0x9F2659b0D2baD4C1D57819df58787cDFd391E3dF",
+            "0x85F0e02cb992aa1F9F47112F815F519EF1A59E2D",
+            "0x3Bb10958ca236d5bcC1Bb28C28f10fD5260f42F8",
+            "0x69D60ad11fEB699fE5fEEeB16AC691dF090bfd50",
+            "0x1dDB2C0897daF18632662E71fdD2dbDC0eB3a9Ec",
+            "0x2d956093d27621eC0c4628b77EAeAC6C734dA02C"
+        ],
+        "nftaq": "0x322b21a49b89d01780570d05922Cc0808b9B7Ab9"
     }
-  }
+}
