@@ -8,8 +8,10 @@
     "test": "npx hardhat test",
     "prettier": "prettier --write 'contracts/**/*.sol'",
     "deploy:local": "NODE_ENV=local hardhat run --network hardhat",
-    "deploy:dev": "NODE_ENV=dev hardhat run --network tbsc",
-    "deploy:prod": "NODE_ENV=prod hardhat run --network bsc",
+    "deploy:dev_tbsc": "NODE_ENV=dev hardhat run --network tbsc",
+    "deploy:dev_baobab": "NODE_ENV=dev hardhat run --network baobab",
+    "deploy:prod_klaytn": "NODE_ENV=prod hardhat run --network klaytn",
+    "deploy:prod_bsc": "NODE_ENV=prod hardhat run --network bsc",
     "verify:local": "NODE_ENV=local hardhat verify --network hard",
     "verify:dev": "NODE_ENV=dev hardhat verify --network tbsc",
     "verify:prod": "NODE_ENV=prod hardhat verify --network bsc"

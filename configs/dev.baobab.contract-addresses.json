@@ -1,0 +1,12 @@
+{
+    "baobab": {
+        "erc20CurrencyIsWhitelisted": [
+            "0xfF52C728ea23F582108C1075b8f91C189991eE09",
+            "0xb0268aaC8F0Ea573091d8E65b63BC138Da890668"
+        ],
+        "nftContractIsWhitelisted": [
+            "0x52608040b30bfc1a9fbd27e780e1b9a775f5f4fa"
+        ],
+        "nftaq": "0x07cC2Bdb9e04D3C6B292Eef8DCFBD72DDD1a31F5"
+    }
+}

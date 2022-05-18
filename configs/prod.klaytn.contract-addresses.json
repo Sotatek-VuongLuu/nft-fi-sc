@@ -1,0 +1,7 @@
+{
+  "klaytn": {
+    "erc20CurrencyIsWhitelisted": ["", ""],
+    "nftContractIsWhitelisted": [""],
+    "nftaq": ""
+  }
+}

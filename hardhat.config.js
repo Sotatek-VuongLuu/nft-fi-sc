@@ -7,6 +7,9 @@ require("@nomiclabs/hardhat-etherscan");
 require("hardhat-contract-sizer");
 require("@nomiclabs/hardhat-web3");
 
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
@@ -146,6 +149,18 @@ module.exports = {
       chainId: 56,
       gasPrice: 5000000000,
     },
+    klaytn: {
+      chainId: 8217,
+      gasPrice: 750000000000,
+      url: "https://public-node-api.klaytnapi.com/v1/cypress/",
+      accounts: [PRIVATE_KEY],
+    },
+    baobab: {
+      chainId: 1001,
+      gasPrice: 250000000000,
+      url: "https://api.baobab.klaytn.net:8651/",
+      accounts: [PRIVATE_KEY],
+    },
   },
   solidity: {
     version: "0.8.0",
@@ -170,9 +185,6 @@ module.exports = {
     disambiguatePaths: false,
   },
 };
-
-const INFURA_API_KEY = process.env.INFURA_API_KEY;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 module.exports.networks.bsc = {
   url: "https://bsc-dataseed.binance.org/",
