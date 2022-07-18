@@ -151,8 +151,8 @@ module.exports = {
     },
     klaytn: {
       chainId: 8217,
-      gasPrice: 750000000000,
-      url: "https://public-node-api.klaytnapi.com/v1/cypress/",
+      gasPrice: 250000000000,
+      url: "https://public-node-api.klaytnapi.com/v1/cypress",
       accounts: [PRIVATE_KEY],
     },
     baobab: {

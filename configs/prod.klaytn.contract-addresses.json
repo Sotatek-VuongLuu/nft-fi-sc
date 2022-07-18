@@ -1,7 +1,17 @@
 {
-  "klaytn": {
-    "erc20CurrencyIsWhitelisted": ["", ""],
-    "nftContractIsWhitelisted": [""],
-    "nftaq": ""
-  }
+    "klaytn": {
+        "erc20CurrencyIsWhitelisted": [
+            "0xe4f05a66ec68b54a58b17c22107b02e0232cc817",
+            "0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167"
+        ],
+        "nftContractIsWhitelisted": [
+            "0x8f5aa6b6dcd2d952a22920e8fe3f798471d05901",
+            "0x990d8cfbce8892e2126f85637f3728b53266b45e",
+            "0x2da32c00c3d0a77623cb13a371b24fffbafda4a7",
+            "0xa91099bdae234a65a6214bbf04269e46476946d1",
+            "0xe47e90c58f8336a2f24bcd9bcb530e2e02e1e8ae",
+            "0xd643bb39f81ff9079436f726d2ed27abc547cb38"
+        ],
+        "nftaq": "0xBc17c09d21eeBBD40Ba9D4363C122a75647D5B6b"
+    }
 }

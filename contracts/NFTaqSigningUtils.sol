@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "./libraries/ECDSA.sol";
 
 
 // @title  Helper contract for NFTaq. This contract manages verifying signatures
